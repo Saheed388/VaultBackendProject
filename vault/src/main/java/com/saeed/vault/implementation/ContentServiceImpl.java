@@ -6,6 +6,8 @@ import com.saeed.vault.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContentServiceImpl implements ContentService {
 
@@ -25,5 +27,15 @@ public class ContentServiceImpl implements ContentService {
 
         // Save the content using the repository
         return contentRepository.save(content);
+    }
+
+    @Override
+    public List<Content> getAllContent() {
+        return contentRepository.findAll();
+    }
+
+    @Override
+    public Content getContentById(Long contentId) {
+        return contentRepository.findById(contentId).orElse(null);
     }
 }

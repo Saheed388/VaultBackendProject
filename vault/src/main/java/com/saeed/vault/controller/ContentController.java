@@ -5,10 +5,9 @@ import com.saeed.vault.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api") // Updated endpoint to follow REST conventions
@@ -23,7 +22,18 @@ public class ContentController {
         return ResponseEntity.ok(savedContent); // Return the saved content with a 200 OK response
     }
 
-    public ResponseEntity<String> getAllContent(){
+    @GetMapping("/getAll/contents")
+    public ResponseEntity<List<Content>> getAllContent(){
+        return new ResponseEntity<>(contentService.getAllContent(), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{contentId}")
+    public ResponseEntity<Content> getContentById(@PathVariable Long contentId){
+        Content content = contentService.getContentById(contentId);
+        if (content != null)
+            return new ResponseEntity<>(content, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 }
