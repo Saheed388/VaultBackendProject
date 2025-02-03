@@ -1,16 +1,19 @@
 package com.saeed.vault.service;
 
 import com.saeed.vault.model.Content;
+import com.saeed.vault.payload.ContentDTO;
+import com.saeed.vault.payload.ContentResponse;
 
 import java.util.List;
 
 public interface ContentService {
 
-    Content saveContent(Content content);
 
-    List<Content> getAllContent();
+    ContentResponse getAllContent(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder);
 
-    Content getContentById(Long contentId);
+    ContentDTO savedContentDTO(ContentDTO contentDTO);
 
-    boolean deleteContentById(Long contentId);
+    ContentDTO getContentById(Long contentId);
+
+    ContentDTO deleteContent(Long contentId);
 }

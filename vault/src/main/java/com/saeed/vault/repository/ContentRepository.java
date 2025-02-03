@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContentRepository extends JpaRepository<Content, Long> {
+    Content findByContentId(Long contentId);
+
     // Custom query methods can be added here if needed
 }
