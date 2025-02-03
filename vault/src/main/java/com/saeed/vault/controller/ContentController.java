@@ -28,7 +28,7 @@ public class ContentController {
 
     }
 
-    @GetMapping("/{contentId}")
+    @GetMapping("/content/{contentId}")
     public ResponseEntity<Content> getContentById(@PathVariable Long contentId){
         Content content = contentService.getContentById(contentId);
         if (content != null)
