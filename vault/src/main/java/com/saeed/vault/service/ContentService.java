@@ -16,4 +16,6 @@ public interface ContentService {
     ContentDTO getContentById(Long contentId);
 
     ContentDTO deleteContent(Long contentId);
+
+    ContentResponse searchProductByKeyword(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder);
 }

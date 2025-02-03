@@ -97,6 +97,43 @@ public class ContentServiceImpl implements ContentService {
         contentRepository.delete(content);
         return modelMapper.map(content, ContentDTO.class);
     }
+
+    @Override
+    public ContentResponse searchProductByKeyword(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+
+        // Corrected: Ensure wildcard '%' is inside the string
+        Page<Content> pageContents = contentRepository.findByTitleLikeIgnoreCase("%" + keyword + "%", pageDetails);
+
+        List<Content> contents = pageContents.getContent();
+
+        // Check for empty results before mapping
+        if (contents.isEmpty()) {
+            throw new APIException("Products not found with keyword: " + keyword);
+        }
+
+        // Corrected: Mapping each product individually
+        List<ContentDTO> productDTOS = contents.stream()
+                .map(product -> modelMapper.map(product, ContentDTO.class))
+                .toList();
+
+        // Creating response object
+        ContentResponse contentResponse = new ContentResponse();
+        contentResponse.setContent(productDTOS);
+        contentResponse.setPageNumber(pageContents.getNumber());
+        contentResponse.setPageSize(pageContents.getSize());
+        contentResponse.setTotalElements(pageContents.getTotalElements());
+        contentResponse.setTotalPages(pageContents.getTotalPages());
+        contentResponse.setLastPage(pageContents.isLast());
+
+        return contentResponse;
     }
+
+}
+
 
 
