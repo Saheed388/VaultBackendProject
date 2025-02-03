@@ -36,4 +36,15 @@ public class ContentController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
+
+    @DeleteMapping("/content/{contentId}")
+    public ResponseEntity<String> deleteContent(@PathVariable Long contentId){
+        boolean deleted = contentService.deleteContentById(contentId);
+        if (deleted) {
+            return new ResponseEntity<>("Content deleted successfully", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Company Not Found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

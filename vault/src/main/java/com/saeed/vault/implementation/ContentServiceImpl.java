@@ -38,4 +38,13 @@ public class ContentServiceImpl implements ContentService {
     public Content getContentById(Long contentId) {
         return contentRepository.findById(contentId).orElse(null);
     }
-}
+
+    @Override
+    public boolean deleteContentById(Long contentId) {
+        if(contentRepository.existsById(contentId)) {
+            contentRepository.deleteById(contentId);
+            return true;
+        }else
+            return false;
+        }
+    }

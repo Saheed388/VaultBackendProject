@@ -11,4 +11,6 @@ public interface ContentService {
     List<Content> getAllContent();
 
     Content getContentById(Long contentId);
+
+    boolean deleteContentById(Long contentId);
 }
